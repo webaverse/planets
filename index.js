@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import metaversefile from 'metaversefile';
-const {useApp, useInternals, useFrame} = metaversefile;
+const {useApp, useFrame, useCleanup} = metaversefile;
 
 const baseUrl = import.meta.url.replace(/(\/)[^\/\\]*$/, '$1');
 
@@ -36,5 +36,11 @@ export default () => {
     }
   });
   
+  useCleanup(() => {
+    planet.material.map.dispose();
+    planet.material.dispose();
+    planet.geometry.dispose();
+  }); 
+
   return app;
 };
